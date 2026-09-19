@@ -2,7 +2,7 @@ import json
 import requests
 import logging
 from requests.exceptions import RequestException
-from .config import get_setting, API_URL, CHAT_API_URL, EMBEDDINGS_MODEL, CHAT_MODEL, CLAUDE_API_URL, CLAUDE_MODEL
+from .config import get_setting, get_embeddings_api_url, get_chat_api_url, get_claude_api_url, EMBEDDINGS_MODEL, CHAT_MODEL, CLAUDE_MODEL
 
 def get_embedding(text):
     headers = {
@@ -17,7 +17,7 @@ def get_embedding(text):
     })
 
     try:
-        response = requests.post(API_URL, headers=headers, data=data)
+        response = requests.post(get_embeddings_api_url(), headers=headers, data=data)
         response.raise_for_status()
         result = response.json()
         if 'data' not in result or not result['data']:
@@ -71,7 +71,7 @@ def summarize_content(question, text):
     })
 
     try:
-        response = requests.post(CHAT_API_URL, headers=headers, data=data)
+        response = requests.post(get_chat_api_url(), headers=headers, data=data)
         response.raise_for_status()
 
         return response.json()['choices'][0]['message']['content']
@@ -139,7 +139,7 @@ def get_chat_response_openai(api_key, system_message, user_message):
     })
 
     try:
-        response = requests.post(CHAT_API_URL, headers=headers, data=data)
+        response = requests.post(get_chat_api_url(), headers=headers, data=data)
         response.raise_for_status()
         return response.json()['choices'][0]['message']['content']
     except RequestException as e:
@@ -176,7 +176,7 @@ def get_chat_response_claude(api_key, system_message, user_message):
         ],
     })
     
-    response = requests.post(CLAUDE_API_URL, headers=headers, data=data)
+    response = requests.post(get_claude_api_url(), headers=headers, data=data)
     response_json = response.json()
     
     if 'content' in response_json:

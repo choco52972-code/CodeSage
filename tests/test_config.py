@@ -75,6 +75,9 @@ class TestConfigDefaultSettings:
             assert 'use_reranker' in settings
             assert 'use_hybrid_search' in settings
             assert 'chunk_overlap_tokens' in settings
+            assert 'openai_api_url' in settings
+            assert 'claude_api_key' in settings
+            assert 'claude_api_url' in settings
 
             # Restore
             config_module.SETTINGS_FILE = original_settings_file
@@ -100,6 +103,9 @@ class TestConfigDefaultSettings:
             assert settings['use_reranker'] == True
             assert settings['use_hybrid_search'] == True
             assert settings['chunk_overlap_tokens'] == 200
+            assert settings['openai_api_url'] == ''
+            assert settings['claude_api_key'] == ''
+            assert settings['claude_api_url'] == ''
 
             # Restore
             config_module.SETTINGS_FILE = original_settings_file
@@ -107,6 +113,51 @@ class TestConfigDefaultSettings:
         finally:
             import shutil
             shutil.rmtree(temp_dir, ignore_errors=True)
+
+
+class TestGetApiUrls:
+
+    def test_embeddings_url_falls_back_to_default(self):
+        from SageLibs.config import get_embeddings_api_url, API_URL
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'openai_api_url': ''}
+            assert get_embeddings_api_url() == API_URL
+
+    def test_chat_url_falls_back_to_default(self):
+        from SageLibs.config import get_chat_api_url, CHAT_API_URL
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'openai_api_url': ''}
+            assert get_chat_api_url() == CHAT_API_URL
+
+    def test_claude_url_falls_back_to_default(self):
+        from SageLibs.config import get_claude_api_url, CLAUDE_API_URL
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'claude_api_url': ''}
+            assert get_claude_api_url() == CLAUDE_API_URL
+
+    def test_embeddings_url_uses_custom_base(self):
+        from SageLibs.config import get_embeddings_api_url
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'openai_api_url': 'http://localhost:8000/v1'}
+            assert get_embeddings_api_url() == 'http://localhost:8000/v1/embeddings'
+
+    def test_chat_url_uses_custom_base_with_trailing_slash(self):
+        from SageLibs.config import get_chat_api_url
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'openai_api_url': 'http://localhost:8000/v1/'}
+            assert get_chat_api_url() == 'http://localhost:8000/v1/chat/completions'
+
+    def test_claude_url_uses_custom_override(self):
+        from SageLibs.config import get_claude_api_url
+
+        with patch('SageLibs.config.get_settings') as mock_get_settings:
+            mock_get_settings.return_value = {'claude_api_url': 'http://localhost:9000/v1/messages'}
+            assert get_claude_api_url() == 'http://localhost:9000/v1/messages'
 
 
 class TestGetSetting:

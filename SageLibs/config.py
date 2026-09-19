@@ -43,6 +43,9 @@ def load_settings():
     
     default_settings = {
         'openai_api_key': 'your_openai_api_key',
+        'openai_api_url': '',
+        'claude_api_key': '',
+        'claude_api_url': '',
         'filter_content': '',
         'use_question_history': '',
         'extensions': ['.md', '.vue', '.js', '.json', '.css', '.html', '.py', '.pdf', '.java', '.ts', '.jsx', '.tsx', '.php', '.c', '.cpp', '.h', '.cs', '.swift', '.rb', '.go', '.kt', '.sql', '.hpp', '.m', '.mm'],
@@ -83,6 +86,22 @@ def get_settings():
 
 def get_setting(key, default=None):
     return get_settings().get(key, default)
+
+def get_embeddings_api_url():
+    base_url = (get_setting('openai_api_url') or '').strip()
+    if base_url:
+        return f"{base_url.rstrip('/')}/embeddings"
+    return API_URL
+
+def get_chat_api_url():
+    base_url = (get_setting('openai_api_url') or '').strip()
+    if base_url:
+        return f"{base_url.rstrip('/')}/chat/completions"
+    return CHAT_API_URL
+
+def get_claude_api_url():
+    url = (get_setting('claude_api_url') or '').strip()
+    return url if url else CLAUDE_API_URL
 
 def update_settings(new_settings):
     global settings

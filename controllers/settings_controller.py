@@ -10,6 +10,9 @@ def settings_route():
         logging.debug("설정 업데이트 시작")
         new_settings = {
             'openai_api_key': request.form.get('apiKey', 'your_openai_api_key'),
+            'openai_api_url': request.form.get('apiUrl', '').strip(),
+            'claude_api_key': request.form.get('claudeApiKey', '').strip(),
+            'claude_api_url': request.form.get('claudeApiUrl', '').strip(),
             'filter_content': request.form.get('filterContent'),
             'use_question_history': request.form.get('useQuestionHistory'),
             'extensions': request.form.get('extensions'),
@@ -26,6 +29,9 @@ def settings_route():
     # Get current settings
     template_data = {
         'openai_api_key': get_setting('openai_api_key', ''),
+        'openai_api_url': get_setting('openai_api_url', ''),
+        'claude_api_key': get_setting('claude_api_key', ''),
+        'claude_api_url': get_setting('claude_api_url', ''),
         'filter_content': get_setting('filter_content', ''),
         'use_question_history': get_setting('use_question_history', ''),
         'extensions': ", ".join(get_setting('extensions', [])),

@@ -20,6 +20,23 @@
                 <label for="apiKey" class="form-label">OpenAI API Key:</label>
                 <input type="text" class="form-control" id="apiKey" name="apiKey" value="{{ openai_api_key }}">
             </div>
+            <div class="mb-3">
+                <label for="apiUrl" class="form-label">OpenAI API Base URL (optional):</label>
+                <input type="text" class="form-control" id="apiUrl" name="apiUrl" placeholder="https://api.openai.com/v1" value="{{ openai_api_url }}">
+                <div class="form-text">Azure OpenAI, 사내 프록시 등 OpenAI 호환 엔드포인트를 쓸 때만 입력하세요. 비워두면 기본 OpenAI API를 사용합니다.</div>
+            </div>
+            <hr>
+            <h5 class="mb-3">Claude (Anthropic) API <small class="text-muted">(optional)</small></h5>
+            <div class="mb-3">
+                <label for="claudeApiKey" class="form-label">Claude API Key:</label>
+                <input type="text" class="form-control" id="claudeApiKey" name="claudeApiKey" value="{{ claude_api_key }}">
+                <div class="form-text">입력하면 답변 생성 시 OpenAI 대신 Claude를 사용합니다. 비워두면 OpenAI를 사용합니다.</div>
+            </div>
+            <div class="mb-3">
+                <label for="claudeApiUrl" class="form-label">Claude API URL (optional):</label>
+                <input type="text" class="form-control" id="claudeApiUrl" name="claudeApiUrl" placeholder="https://api.anthropic.com/v1/messages" value="{{ claude_api_url }}">
+            </div>
+            <hr>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="filterContent" name="filterContent" {{ 'checked' if filter_content else '' }}>
                 <label class="form-check-label" for="filterContent">Filter and process only relevant content</label>
