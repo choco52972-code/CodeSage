@@ -105,7 +105,7 @@ class TestConfigDefaultSettings:
             assert settings['chunk_overlap_tokens'] == 200
             assert settings['openai_api_url'] == ''
             assert settings['claude_api_key'] == ''
-            assert settings['claude_api_url'] == ''
+            assert settings['claude_api_url'] == 'http://localhost:8317/v1/models'
 
             # Restore
             config_module.SETTINGS_FILE = original_settings_file

@@ -15,7 +15,7 @@ Code Sage는 OpenAI 또는 Claude API를 활용하여 프로젝트 코드베이�
 
 ## 설치 및 사용 방법
 
-### 1. 수동 설치 방법
+### 설치 방법
 
 1. 이 저장소를 클론하거나 다운받습니다:
    ```
@@ -54,35 +54,6 @@ Code Sage는 OpenAI 또는 Claude API를 활용하여 프로젝트 코드베이�
 
 10. "Analyze from main branch" 또는 "Analyze Recent Commit" 버튼을 사용하여 코드 변경사항을 분석할 수 있습니다.
     * 코드 변경사항 분석은 하나의 폴더만 지정할 수 있습니다.
-
-### 2. Docker를 이용한 설치 방법
-
-Docker를 사용하면 Code Sage를 간단하게 배포하고 실행할 수 있습니다. 아래 단계에 따라 도커를 사용하여 애플리케이션을 실행할 수 있습니다.
-
-1. 이 저장소를 클론하거나 다운받습니다:
-   ```
-   git clone https://github.com/your-repo/CodeSage.git
-   cd CodeSage
-   ```
-
-2. 프로젝트 루트 디렉토리에 있는 `Dockerfile`을 사용하여 도커 이미지를 빌드합니다:
-   ```
-   docker build -t codesage:latest .
-   ```
-
-3. 도커 컨테이너를 실행합니다:
-   ```
-   docker run -d -p 8080:8080 --name codesage_container codesage:latest
-   ```
-
-   이 명령어는 Code Sage를 백그라운드에서 실행하며, 로컬 머신의 8080 포트를 컨테이너의 8080 포트에 매핑합니다.
-
-4. 웹 브라우저에서 `http://localhost:8080`에 접속합니다.
-
-5. 설정 버튼을 클릭하시고 OpenAI API 키를 입력합니다.
-   * 기타 설정을 확인 후 `Save Settings` 버튼을 클릭합니다.
-
-6. 나머지 설정 및 사용 방법은 수동 설치 방법과 동일합니다.
 
 ## 설정 변경
 

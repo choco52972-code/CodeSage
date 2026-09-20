@@ -42,10 +42,10 @@ def load_settings():
     global settings
     
     default_settings = {
+        'claude_api_key': '',
+        'claude_api_url': 'http://localhost:8317/v1/models',
         'openai_api_key': 'your_openai_api_key',
         'openai_api_url': '',
-        'claude_api_key': '',
-        'claude_api_url': '',
         'filter_content': '',
         'use_question_history': '',
         'extensions': ['.md', '.vue', '.js', '.json', '.css', '.html', '.py', '.pdf', '.java', '.ts', '.jsx', '.tsx', '.php', '.c', '.cpp', '.h', '.cs', '.swift', '.rb', '.go', '.kt', '.sql', '.hpp', '.m', '.mm'],
